@@ -1,0 +1,19 @@
+const HDWallerProvider = require('truffle-hdwallet-provider');
+const Web3 = require('web3');
+const { interface, bytecode } = require('./compile');
+
+const provider = new HDWallerProvider(
+  'carbon mix grief layer betray sorry pupil trophy object humor surface session',
+  'https://rinkeby.infura.io/v3/d2f3f4b8e13e47709acd01912332789a'
+);
+const web3 = new Web3(provider);
+
+(async () => {
+  const accounts = await web3.eth.getAccounts();
+  console.log('Attempting to deploy from account: ', accounts[0]);
+  
+  const deployedContract = await new web3.eth.Contract(JSON.parse(interface))
+    .deploy({ data: bytecode, arguments: ['Hello, Rinkeby!'] })
+    .send({ gas: '1000000', from: accounts[0] });
+  console.log('Contracted deployed to the Rinkeby Network at: ', deployedContract.options.address);
+})();
