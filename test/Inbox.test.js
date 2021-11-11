@@ -25,7 +25,7 @@ describe('Inbox', () => {
   });
 
   it('has a default message', async () => {
-    const message = await inbox.methods.message().call();
+    const message = await inbox.methods.message().call(); // call() is read-only
     assert.equal(message, INITIAL_STRING)
   });
 
